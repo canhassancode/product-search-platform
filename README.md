@@ -14,7 +14,7 @@
   - [🎉 Features](#-features)
   - [💡 Problem Statement](#-problem-statement)
     - [User story](#user-story)
-    - [The Challenge / Problem statement](#the-challenge--problem-statement)
+    - [The Challenge](#the-challenge)
     - [The Solution](#the-solution)
   - [🏗️ Architecture Decisions](#️-architecture-decisions)
     - [1. Client-side searching vs Server-side searching](#1-client-side-searching-vs-server-side-searching)
@@ -54,7 +54,7 @@ After running these commands, navigate to [http://localhost:3000](http://localho
 > I want to quickly find wellness products that match my specific criteria,  
 > so I can improve my wellbeing without spending hours researching.
 
-### The Challenge / Problem statement
+### The Challenge
 
 Healf's catalog contains **5,955+ wellness products** across multiple categories
 (supplements, skincare, sleep aids, etc.). Customers need a way to:
