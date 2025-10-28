@@ -3,6 +3,9 @@ module.exports = {
   transform: {
     "^.+\\.(t|j)sx?$": "@swc/jest",
   },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
+  },
   extensionsToTreatAsEsm: [".ts"],
   maxWorkers: "50%",
   cache: true,
