@@ -2,7 +2,7 @@
 
 > _High performaing fuzzy-search interface for **5,995+ Healf** wellness products with advanced filtering._
 
-[💻 Voiceover Demo](TODO) • [🚀 Live Demo](TODO)
+[Architecture Diagram](./docs/architecture-diagram.png) • [Voiceover Demo](TODO) • [Live Demo](TODO)
 
 ---
 
