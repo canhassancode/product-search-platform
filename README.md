@@ -22,7 +22,8 @@
     - [3. Tag-Based Filtering vs Other Filter Types](#3-tag-based-filtering-vs-other-filter-types)
     - [4. Virtual Scrolling vs Pagination](#4-virtual-scrolling-vs-pagination)
     - [5. Data optimisation strategy](#5-data-optimisation-strategy)
-    - [6. TypeScript vs JavaScript](#6-typescript-vs-javascript)
+    - [6. Shadcn Data Table](#6-shadcn-data-table)
+    - [7. TypeScript vs JavaScript](#7-typescript-vs-javascript)
   - [👤 Author](#-author)
 
 ## 🚀 Quickstart
@@ -223,7 +224,24 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 
 ---
 
-### 6. TypeScript vs JavaScript
+### 6. Shadcn Data Table
+
+**Decision:** Use Shadcn components for bulk of the rendered components
+
+**Why:**
+
+- Battle-tested component library that is mature and well-known amongst developers.
+- More than capable for the requirements.
+- Lots of benefits plus opportunities for expansion out-the-box.
+
+**Trade-offs:**
+
+- ⚠️ Not as customisable as an in-house component could be
+- ✅ Lends itself well to the requirements and development time
+
+---
+
+### 7. TypeScript vs JavaScript
 
 **Decision:** Full TypeScript implementation
 
