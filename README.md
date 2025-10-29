@@ -264,6 +264,7 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 ### 8. Other decisions
 
 - Using `husky` for pre-commit checks as this is trunk-based-development.
+- Testing: Include tests for lower-level functions such as the product-loader within `/lib`. With a single E2E test for confidence.
 - Using `swc/jest` over `ts-jest` for lightning-fast speeds on local tests.
 
 ## 👤 Author
