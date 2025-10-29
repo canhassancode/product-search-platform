@@ -182,7 +182,7 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 
 ### 5. Data optimisation strategy
 
-**Decision:** Aggressive server-side payload reduction (50MB -> ~6MB)
+**Decision:** Aggressive server-side payload reduction (50MB -> ~6MB): **Update**: `Confirmed reduction to ~2.34MB`.
 
 **Why:**
 
