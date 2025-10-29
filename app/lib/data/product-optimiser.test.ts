@@ -45,6 +45,16 @@ describe("Given the product optimiser", () => {
       expect(result.every((product) => product.status === "ACTIVE")).toBe(true);
     });
 
+    it("should filter out products with invalid image URLs", () => {
+      const result = optimiseProducts(unoptimisedProductsData);
+
+      expect(
+        result.every(
+          (product) => product.imageUrl && product.imageUrl.trim() !== "" && product.imageUrl !== "null" && product.imageUrl !== "undefined"
+        )
+      ).toBe(true);
+    });
+
     it("should reduce description length to be max 200 characters", () => {
       const result = optimiseProducts(unoptimisedProductsData);
 

@@ -2,11 +2,19 @@ import { Product } from "@/lib/types/product";
 
 export function optimiseProducts(products: Product[]): Product[] {
   const activeProducts = filterInactiveProducts(products);
-  return activeProducts.map((product) => ({
+  const productsWithValidImageUrl = filterProductsWithValidImageUrl(activeProducts);
+  return productsWithValidImageUrl.map((product) => ({
     ...product,
     description: truncateDescription(product.description),
     tags: filterUndesiredTags(product.tags),
   }));
+}
+
+function filterProductsWithValidImageUrl(products: Product[]): Product[] {
+  return products.filter(
+    (product) =>
+      typeof product.imageUrl === "string" && product.imageUrl.trim() !== "" && product.imageUrl !== "null" && product.imageUrl !== "undefined"
+  );
 }
 
 function filterInactiveProducts(products: Product[]): Product[] {
