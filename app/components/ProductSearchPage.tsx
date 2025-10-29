@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { useRef, useState } from "react";
 import { searchProducts } from "@/lib/search/search-engine";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import useDebounce from "@/hooks/useDebounce";
 
 interface ProductSearchPageProps {
   products: Product[];
@@ -111,7 +112,8 @@ function ProductCard({ product }: { product: Product }) {
 
 export function ProductSearchPage({ products }: ProductSearchPageProps) {
   const [query, setQuery] = useState("");
-  const results = searchProducts(products, query, ["title", "description", "tags"]);
+  const debouncedQuery = useDebounce(query);
+  const results = searchProducts(products, debouncedQuery, ["title", "description", "tags"]);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -123,8 +125,8 @@ export function ProductSearchPage({ products }: ProductSearchPageProps) {
       </section>
       <section className="container mx-auto w-full lg:px-8">
         <h1 className="text-2xl font-bold text-gray-900">
-          {query && `${results.length} results for "${query}"`}
-          {!query && `${results.length} results`}
+          {debouncedQuery && `${results.length} results for "${debouncedQuery}"`}
+          {!debouncedQuery && `${results.length} results`}
         </h1>
       </section>
       <section className="container mx-auto w-full px-4 py-2 min-h-screen rounded-t-3xl flex flex-col lg:flex-row gap-4">
