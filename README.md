@@ -24,6 +24,7 @@
     - [5. Data optimisation strategy](#5-data-optimisation-strategy)
     - [6. Shadcn Data Table](#6-shadcn-data-table)
     - [7. TypeScript vs JavaScript](#7-typescript-vs-javascript)
+    - [8. Other decisions](#8-other-decisions)
   - [👤 Author](#-author)
 
 ## 🚀 Quickstart
@@ -259,6 +260,11 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 **Not really a trade-off:** TypeScript is standard for production Next.js apps in 2025.
 
 ---
+
+### 8. Other decisions
+
+- Using `husky` for pre-commit checks as this is trunk-based-development.
+- Using `swc/jest` over `ts-jest` for lightning-fast speeds on local tests.
 
 ## 👤 Author
 
