@@ -10,7 +10,7 @@ const rawProductRowData: RawCSVRow[] = [
     TAGS: "tag1, tag2, tag3",
     PRICE_RANGE_V2: '{"min_variant_price":{"amount":18.55}}',
     FEATURED_IMAGE: '{"url":"https://test.com/image1.jpg"}',
-    STATUS: "active",
+    STATUS: "ACTIVE",
   },
   {
     ID: "2",
@@ -20,7 +20,7 @@ const rawProductRowData: RawCSVRow[] = [
     TAGS: "tag4, tag5, tag6",
     PRICE_RANGE_V2: '{"min_variant_price":{"amount":28.55}}',
     FEATURED_IMAGE: '{"url":"https://test.com/image2.jpg"}',
-    STATUS: "inactive",
+    STATUS: "INACTIVE",
   },
   {
     ID: "3",
@@ -30,7 +30,7 @@ const rawProductRowData: RawCSVRow[] = [
     TAGS: "tag7, tag8, tag9",
     PRICE_RANGE_V2: '{"min_variant_price":{"amount":38.55}}',
     FEATURED_IMAGE: '{"url":"https://test.com/image3.jpg"}',
-    STATUS: "active",
+    STATUS: "ACTIVE",
   },
   {
     ID: "4",
@@ -40,7 +40,17 @@ const rawProductRowData: RawCSVRow[] = [
     TAGS: "tag10, tag11, tag12",
     PRICE_RANGE_V2: '{"min_variant_price":{"amount":48.55}}',
     FEATURED_IMAGE: '{"url":"https://test.com/image4.jpg"}',
-    STATUS: "active",
+    STATUS: "ACTIVE",
+  },
+  {
+    ID: "5",
+    TITLE: "Product 5",
+    VENDOR: "Vendor 5",
+    BODY_HTML: "<p>Hello <strong>world</strong>!</p>",
+    TAGS: "tag13, tag14, tag15",
+    PRICE_RANGE_V2: '{"min_variant_price":{"amount":58.55}}',
+    FEATURED_IMAGE: '{"url":"https://test.com/image5.jpg"}',
+    STATUS: "INACTIVE",
   },
 ];
 
@@ -53,7 +63,7 @@ const expectedProducts: Product[] = [
     tags: ["tag7", "tag8", "tag9"],
     price: 38.55,
     imageUrl: "https://test.com/image3.jpg",
-    status: "active",
+    status: "ACTIVE",
   },
   {
     id: "4",
@@ -63,7 +73,17 @@ const expectedProducts: Product[] = [
     tags: ["tag10", "tag11", "tag12"],
     price: 48.55,
     imageUrl: "https://test.com/image4.jpg",
-    status: "active",
+    status: "ACTIVE",
+  },
+  {
+    id: "5",
+    title: "Product 5",
+    vendor: "Vendor 5",
+    description: "Hello world!",
+    tags: ["tag13", "tag14", "tag15"],
+    price: 58.55,
+    imageUrl: "https://test.com/image5.jpg",
+    status: "INACTIVE",
   },
 ];
 
@@ -101,7 +121,7 @@ describe("Given the product transformer", () => {
         const result = transformRawProducts(rawProductRowData);
 
         const productWithStrippedHtml = result.filter((product) => product.description === "Hello world!");
-        expect(productWithStrippedHtml).toHaveLength(1);
+        expect(productWithStrippedHtml).toHaveLength(2);
       });
     });
 
