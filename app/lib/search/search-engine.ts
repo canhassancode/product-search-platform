@@ -11,7 +11,7 @@ export function searchProducts(products: Product[], query: string, keys: string[
   const fuse = new Fuse(products, {
     keys,
     includeScore: true,
-    threshold: 0.1,
+    threshold: 0.3,
     distance: 100,
     includeMatches: true,
     isCaseSensitive: false,

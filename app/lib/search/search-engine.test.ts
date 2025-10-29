@@ -4,32 +4,42 @@ import { searchProducts } from "./search-engine";
 const products: Product[] = [
   {
     id: "1",
-    title: "Product 1",
-    description: "Description 1",
-    tags: ["tag1", "tag2", "tag3"],
-    vendor: "Vendor 1",
-    price: 100,
-    imageUrl: "https://test.com/image1.jpg",
+    title: "Thorne Stress Support Formula",
+    description: "Supports healthy stress response and promotes relaxation",
+    tags: ["goal:Stress and Anxiety", "Supplements", "Mood support"],
+    vendor: "Thorne",
+    price: 25.99,
+    imageUrl: "https://example.com/stress.jpg",
     status: "ACTIVE",
   },
   {
     id: "2",
-    title: "Product 2",
-    description: "Description 2",
-    tags: ["tag4", "tag5", "tag6"],
-    vendor: "Vendor 2",
-    price: 200,
-    imageUrl: "https://test.com/image2.jpg",
+    title: "Coola Organic Sunscreen SPF 50",
+    description: "Broad spectrum sun protection with organic ingredients",
+    tags: ["filter:Skincare", "Suncare", "SPF"],
+    vendor: "Coola",
+    price: 32.0,
+    imageUrl: "https://example.com/sunscreen.jpg",
     status: "ACTIVE",
   },
   {
     id: "3",
-    title: "Product 3",
-    description: "Description 3",
-    tags: ["tag7", "tag8", "tag9"],
-    vendor: "Vendor 3",
-    price: 300,
-    imageUrl: "https://test.com/image3.jpg",
+    title: "Sleep Quality Plus Melatonin",
+    description: "Natural sleep aid with melatonin and calming herbs",
+    tags: ["goal:Sleep Quality", "Supplements", "Sleep"],
+    vendor: "Nature's Way",
+    price: 18.5,
+    imageUrl: "https://example.com/sleep.jpg",
+    status: "ACTIVE",
+  },
+  {
+    id: "4",
+    title: "Sleep Quality Premium Melatonin",
+    description: "Premium sleep aid with melatonin and calming herbs",
+    tags: ["goal:Sleep Quality", "Supplements", "Sleep"],
+    vendor: "Thorne",
+    price: 25.99,
+    imageUrl: "https://example.com/sleep.jpg",
     status: "ACTIVE",
   },
 ];
@@ -39,21 +49,21 @@ describe("Given the search engine", () => {
     it("should return all products when the query is empty", () => {
       const results = searchProducts(products, "", ["title", "description", "tags"]);
 
-      expect(results.length).toBe(3);
+      expect(results.length).toBe(4);
       expect(results.every((result) => result.score === 1)).toBe(true);
     });
 
-    it("should return products regardless of case", () => {
-      const results = searchProducts(products, "PRO", ["title", "description", "tags"]);
+    it("should return products matching the query regardless of case", () => {
+      const results = searchProducts(products, "Sleeep", ["title", "description", "tags"]);
 
-      expect(results.length).toBe(3);
+      expect(results.length).toBe(2);
     });
 
     it("should return the exact product when the query is the exact product title", () => {
-      const results = searchProducts(products, "Product 1", ["title", "description", "tags"]);
+      const results = searchProducts(products, "Thorne Stress Support Formula", ["title", "description", "tags"]);
 
       expect(results.length).toBe(1);
-      expect(results[0].item.title).toBe("Product 1");
+      expect(results[0].item.title).toBe("Thorne Stress Support Formula");
     });
   });
 });
