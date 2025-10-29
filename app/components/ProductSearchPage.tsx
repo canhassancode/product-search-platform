@@ -1,131 +1,15 @@
 "use client";
 
 import { Product } from "@/lib/types/product";
-import Image from "next/image";
-import { Input } from "./ui/input";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { searchProducts } from "@/lib/search/search-engine";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import useDebounce from "@/hooks/useDebounce";
+import SearchBar from "@/components/SearchBar";
+import Header from "@/components/Header";
+import VirtualisedProductList from "@/components/VirtualisedProductList";
 
 interface ProductSearchPageProps {
   products: Product[];
-}
-
-function Header() {
-  return (
-    <div className="flex justify-between items-center container mx-auto px-4 py-6">
-      <div className="flex items-center gap-6">
-        <Image src="/logo.png" alt="Healf" width={60} height={60} className="rounded-2xl" />
-      </div>
-    </div>
-  );
-}
-
-function SearchBar({ query, setQuery }: { query: string; setQuery: (query: string) => void }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Input type="text" placeholder="Search products" className="bg-white" value={query} onChange={(e) => setQuery(e.target.value)} />
-    </div>
-  );
-}
-
-function VirtualisedProductList({ products }: { products: Product[] }) {
-  const parentRef = useRef(null);
-
-  const getColumns = () => {
-    if (typeof window === "undefined") return 3;
-    if (window.innerWidth >= 1024) return 3;
-    return 2;
-  };
-
-  const columns = getColumns();
-
-  const rows: Product[][] = [];
-  for (let i = 0; i < products.length; i += columns) {
-    rows.push(products.slice(i, i + columns));
-  }
-
-  // eslint-disable-next-line
-  const rowVirtualiser = useVirtualizer({
-    count: rows.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 620,
-    overscan: 4,
-  });
-
-  return (
-    <div ref={parentRef} className="h-screen overflow-y-auto w-full">
-      <div
-        style={{
-          height: `${rowVirtualiser.getTotalSize()}px`,
-          width: "100%",
-          position: "relative",
-        }}
-      >
-        {rowVirtualiser.getVirtualItems().map(({ index, key, start }) => (
-          <div
-            key={key}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              transform: `translateY(${start}px)`,
-            }}
-          >
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-6 p-4" data-index={index}>
-              {rows[index].map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ProductCard({ product }: { product: Product }) {
-  const [imageError, setImageError] = useState(false);
-
-  return (
-    <div className="rounded-xl duration-300 overflow-hidden group hover:scale-101">
-      <div className="relative aspect-3/4 overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
-        {!imageError ? (
-          <Image src={product.imageUrl} alt={product.title} fill className="object-cover" onError={() => setImageError(true)} />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200">
-            <div className="text-center p-4">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <p className="text-sm text-gray-500 mt-2">Image unavailable</p>
-            </div>
-          </div>
-        )}
-
-        <div className="absolute inset-0 bg-red-200/5 group-hover:bg-black/70 transition-all duration-300 flex items-center justify-center">
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-            <p className="text-white text-base leading-relaxed line-clamp-4">{product.description}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="py-4 px-2">
-        <div className="flex justify-between items-start mb-2">
-          <span className="text-sm text-gray-500 font-normal">{product.vendor}</span>
-        </div>
-        <h3 className="font-bold text-gray-900 mb-2">{product.title}</h3>
-        <h4 className="text-lg font-bold text-primary group-hover:text-red-500 transition-all duration-300">£{product.price.toFixed(2)}</h4>
-      </div>
-    </div>
-  );
 }
 
 export function ProductSearchPage({ products }: ProductSearchPageProps) {
