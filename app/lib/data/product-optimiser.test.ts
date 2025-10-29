@@ -19,7 +19,7 @@ const unoptimisedProductsData: Product[] = [
     vendor: "Vendor 4",
     description:
       "This is a very long description for Product 4, giving extensive details about the product, its features, how it can be used, and why it stands out among competitors in its category. Designed and manufactured using the latest technology, Product 4 is made with lightweight materials, has an ergonomic shape, supports multiple international standards, ships worldwide, and comes with a comprehensive warranty. Available in the US, UK, and CA markets, with direct company support. (Internal code: P4-BESTSELLER)",
-    tags: ["Thorne", "Stress and Anxiety", "goal:sleep", "US", "UK", "CA", "_internal", "BESTSELLER", "2024_launch"],
+    tags: ["Thorne", "Stress and Anxiety", "goal:sleep", "US", "UK", "CA", "_internal", "BESTSELLER", "2024_launch", "1.0", "2.24asdasd"],
     price: 48.55,
     imageUrl: "https://test.com/image4.jpg",
     status: "ACTIVE",
@@ -52,6 +52,12 @@ describe("Given the product optimiser", () => {
         "This is a very long description for Product 3, giving extensive details about the product, its features, how it can be used, and why it stands out among competitors in its category. Designed and ma..."
       );
       expect(result.every((product) => product.description.length <= 200)).toBe(true);
+    });
+
+    it("should filter out undesired tags", () => {
+      const result = optimiseProducts(unoptimisedProductsData);
+
+      expect(result[1].tags).toEqual(["Thorne", "Stress and Anxiety", "goal:sleep"]);
     });
   });
 });
