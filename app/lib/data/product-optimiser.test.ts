@@ -44,5 +44,14 @@ describe("Given the product optimiser", () => {
 
       expect(result.every((product) => product.status === "ACTIVE")).toBe(true);
     });
+
+    it("should reduce description length to be max 200 characters", () => {
+      const result = optimiseProducts(unoptimisedProductsData);
+
+      expect(result[0].description).toBe(
+        "This is a very long description for Product 3, giving extensive details about the product, its features, how it can be used, and why it stands out among competitors in its category. Designed and ma..."
+      );
+      expect(result.every((product) => product.description.length <= 200)).toBe(true);
+    });
   });
 });
