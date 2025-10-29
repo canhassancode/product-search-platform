@@ -4,6 +4,7 @@ import { Product } from "@/lib/types/product";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import { searchProducts } from "@/lib/search/search-engine";
 
 interface ProductSearchPageProps {
   products: Product[];
@@ -63,6 +64,7 @@ function ProductCard({ product }: { product: Product }) {
 
 export function ProductSearchPage({ products }: ProductSearchPageProps) {
   const [query, setQuery] = useState("");
+  const results = searchProducts(products, query, ["title", "description", "tags"]);
   return (
     <main className="min-h-screen bg-white">
       <header className="bg-white border-b">
@@ -73,14 +75,14 @@ export function ProductSearchPage({ products }: ProductSearchPageProps) {
       </section>
       <section className="container mx-auto w-full lg:px-8">
         <h1 className="text-2xl font-bold text-gray-900">
-          {query && `${products.length} results for "${query}"`}
-          {!query && `${products.length} results`}
+          {query && `${results.length} results for "${query}"`}
+          {!query && `${results.length} results`}
         </h1>
       </section>
       <section className="container mx-auto w-full px-4 py-2 min-h-screen rounded-t-3xl flex flex-col lg:flex-row gap-4">
         <div className="flex w-full lg:w-1/4 p-4 lg:m-4 bg-gray-50/40 border border-gray-200 rounded-xl">asdasda</div>
         <div className="flex w-full lg:w-3/4 p-4">
-          <ProductList products={products} />
+          <ProductList products={results.map((result) => result.item)} />
         </div>
       </section>
     </main>
