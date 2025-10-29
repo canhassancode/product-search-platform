@@ -3,8 +3,9 @@
 import { Product } from "@/lib/types/product";
 import Image from "next/image";
 import { Input } from "./ui/input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { searchProducts } from "@/lib/search/search-engine";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 interface ProductSearchPageProps {
   products: Product[];
@@ -28,12 +29,58 @@ function SearchBar({ query, setQuery }: { query: string; setQuery: (query: strin
   );
 }
 
-function ProductList({ products }: { products: Product[] }) {
+function VirtualisedProductList({ products }: { products: Product[] }) {
+  const parentRef = useRef(null);
+
+  const getColumns = () => {
+    if (typeof window === "undefined") return 3;
+    if (window.innerWidth >= 1024) return 3;
+    return 2;
+  };
+
+  const columns = getColumns();
+
+  const rows: Product[][] = [];
+  for (let i = 0; i < products.length; i += columns) {
+    rows.push(products.slice(i, i + columns));
+  }
+
+  // eslint-disable-next-line
+  const rowVirtualiser = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 620,
+    overscan: 4,
+  });
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((product: Product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div ref={parentRef} className="h-screen overflow-y-auto w-full">
+      <div
+        style={{
+          height: `${rowVirtualiser.getTotalSize()}px`,
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        {rowVirtualiser.getVirtualItems().map(({ index, key, start }) => (
+          <div
+            key={key}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              transform: `translateY(${start}px)`,
+            }}
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-6 p-4" data-index={index}>
+              {rows[index].map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -65,8 +112,9 @@ function ProductCard({ product }: { product: Product }) {
 export function ProductSearchPage({ products }: ProductSearchPageProps) {
   const [query, setQuery] = useState("");
   const results = searchProducts(products, query, ["title", "description", "tags"]);
+
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-gray-50">
       <header className="bg-white border-b">
         <Header />
       </header>
@@ -81,8 +129,8 @@ export function ProductSearchPage({ products }: ProductSearchPageProps) {
       </section>
       <section className="container mx-auto w-full px-4 py-2 min-h-screen rounded-t-3xl flex flex-col lg:flex-row gap-4">
         <div className="flex w-full lg:w-1/4 p-4 lg:m-4 bg-gray-50/40 border border-gray-200 rounded-xl">asdasda</div>
-        <div className="flex w-full lg:w-3/4 p-4">
-          <ProductList products={results.map((result) => result.item)} />
+        <div className="flex w-full lg:w-3/4">
+          <VirtualisedProductList products={results.map((result) => result.item)} />
         </div>
       </section>
     </main>

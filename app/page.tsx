@@ -28,7 +28,7 @@ function SearchLoading() {
 async function ProductsContent() {
   const products = await loadProducts("app/lib/data/products.csv");
 
-  return <ProductSearchPage products={products.slice(11, 30)} />;
+  return <ProductSearchPage products={products} />;
 }
 
 export default function Home() {
