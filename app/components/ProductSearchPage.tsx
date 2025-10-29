@@ -1,98 +1,88 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useMemo, useRef } from "react";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { Input } from "@/components/ui/input";
 import { Product } from "@/lib/types/product";
-import { searchProducts } from "@/lib/search/search-engine";
-import { ProductCard } from "@/components/ProductCard";
+import Image from "next/image";
+import { Input } from "./ui/input";
+import { useState } from "react";
 
 interface ProductSearchPageProps {
-  initialProducts: Product[];
+  products: Product[];
 }
 
-const COLUMNS_DESKTOP = 5;
-const ROW_HEIGHT_DESKTOP = 380;
-const OVERSCAN = 2;
-
-export function ProductSearchPage({ initialProducts }: ProductSearchPageProps) {
-  const [query, setQuery] = useState("");
-  const parentRef = useRef<HTMLDivElement>(null);
-
-  const filteredResults = useMemo(() => {
-    return searchProducts(initialProducts, query, ["title", "description", "tags"]);
-  }, [initialProducts, query]);
-
-  const filteredProducts = filteredResults.map((result) => result.item);
-
-  const rowCount = Math.ceil(filteredProducts.length / COLUMNS_DESKTOP);
-
-  // eslint-disable-next-line
-  const virtualizer = useVirtualizer({
-    count: rowCount,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => ROW_HEIGHT_DESKTOP,
-    overscan: OVERSCAN,
-  });
-
-  const getRowProducts = (rowIndex: number): Product[] => {
-    const startIndex = rowIndex * COLUMNS_DESKTOP;
-    return filteredProducts.slice(startIndex, startIndex + COLUMNS_DESKTOP);
-  };
-
+function Header() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="flex justify-between items-center container mx-auto px-4 py-4 lg:py-6">
-          <div className="lg:flex hidden items-center gap-6">
-            <Image src="/logo.png" alt="Healf Logo" width={50} height={50} className="rounded-2xl" />
-            <h1 className="text-2xl font-bold">Wellness Products</h1>
+    <div className="flex justify-between items-center container mx-auto px-4 py-6">
+      <div className="flex items-center gap-6">
+        <Image src="/logo.png" alt="Healf" width={60} height={60} className="rounded-2xl" />
+      </div>
+    </div>
+  );
+}
+
+function SearchBar({ query, setQuery }: { query: string; setQuery: (query: string) => void }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Input type="text" placeholder="Search products" className="bg-white" value={query} onChange={(e) => setQuery(e.target.value)} />
+    </div>
+  );
+}
+
+function ProductList({ products }: { products: Product[] }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products.map((product: Product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    <div className="rounded-xl duration-300 overflow-hidden group hover:scale-101">
+      <div className="relative aspect-3/4 overflow-hidden rounded-xl border border-gray-200">
+        <Image src={product.imageUrl} alt={product.title} fill className="object-cover" />
+
+        <div className="absolute inset-0 bg-red-200/5 group-hover:bg-black/70 transition-all duration-300 flex items-center justify-center">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+            <p className="text-white text-base leading-relaxed line-clamp-4">{product.description}</p>
           </div>
-          <Image src="/logo.png" alt="Healf Logo" width={40} height={40} className="lg:hidden rounded-2xl" />
-          <Input
-            type="text"
-            placeholder="Search for a product..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-32 sm:w-48 lg:w-96 text-sm"
-          />
         </div>
+      </div>
+
+      <div className="py-4 px-2">
+        <div className="flex justify-between items-start mb-2">
+          <span className="text-sm text-gray-500 font-normal">{product.vendor}</span>
+        </div>
+        <h3 className="font-bold text-gray-900 mb-2">{product.title}</h3>
+        <h4 className="text-lg font-bold text-primary group-hover:text-red-500 transition-all duration-300">£{product.price.toFixed(2)}</h4>
+      </div>
+    </div>
+  );
+}
+
+export function ProductSearchPage({ products }: ProductSearchPageProps) {
+  const [query, setQuery] = useState("");
+  return (
+    <main className="min-h-screen bg-white">
+      <header className="bg-white border-b">
+        <Header />
       </header>
-
-      <div className="container mx-auto px-4 py-3 lg:py-4">
-        <div className="text-xs sm:text-sm text-muted-foreground">
-          {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} found
-          {query && ` for "${query}"`}
+      <section className="container mx-auto w-4/5 lg:w-1/2 px-4 py-12">
+        <SearchBar query={query} setQuery={setQuery} />
+      </section>
+      <section className="container mx-auto w-full lg:px-8">
+        <h1 className="text-2xl font-bold text-gray-900">
+          {query && `${products.length} results for "${query}"`}
+          {!query && `${products.length} results`}
+        </h1>
+      </section>
+      <section className="container mx-auto w-full px-4 py-2 min-h-screen rounded-t-3xl flex flex-col lg:flex-row gap-4">
+        <div className="flex w-full lg:w-1/4 p-4 lg:m-4 bg-gray-50/40 border border-gray-200 rounded-xl">asdasda</div>
+        <div className="flex w-full lg:w-3/4 p-4">
+          <ProductList products={products} />
         </div>
-      </div>
-
-      <div ref={parentRef} className="container mx-auto px-4 pb-4 h-[calc(100vh-180px)] lg:h-[calc(100vh-200px)] overflow-auto">
-        <div className="relative w-full" style={{ height: `${virtualizer.getTotalSize()}px` }}>
-          {virtualizer.getVirtualItems().map((virtualRow) => {
-            const rowProducts = getRowProducts(virtualRow.index);
-
-            return (
-              <div
-                key={virtualRow.key}
-                className="absolute top-0 left-0 w-full"
-                style={{
-                  height: `${virtualRow.size}px`,
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3 lg:gap-4 h-full pb-2 md:pb-3 lg:pb-4">
-                  {rowProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                  {rowProducts.length < COLUMNS_DESKTOP &&
-                    Array.from({ length: COLUMNS_DESKTOP - rowProducts.length }).map((_, idx) => <div key={`empty-${idx}`} />)}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      </section>
     </main>
   );
 }
