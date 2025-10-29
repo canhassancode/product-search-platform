@@ -9,22 +9,26 @@ export function transformRawProducts(rawProductRows: RawCSVRow[]): Product[] {
 }
 
 function transformSingleProductRow(rawProductRow: RawCSVRow): Product | null {
-  const { ID, TITLE, VENDOR, BODY_HTML, TAGS, PRICE_RANGE_V2, FEATURED_IMAGE, STATUS } = rawProductRow;
+  try {
+    const { ID, TITLE, VENDOR, BODY_HTML, TAGS, PRICE_RANGE_V2, FEATURED_IMAGE, STATUS } = rawProductRow;
 
-  if (!ID || !TITLE) {
+    if (!ID || !TITLE) {
+      return null;
+    }
+
+    return {
+      id: ID,
+      title: TITLE.trim(),
+      vendor: VENDOR?.trim() || "Unknown",
+      description: stripHtml(BODY_HTML || ""),
+      tags: parseTags(TAGS),
+      price: parsePrice(PRICE_RANGE_V2),
+      imageUrl: parseImage(FEATURED_IMAGE) ?? "",
+      status: STATUS || "ACTIVE",
+    };
+  } catch {
     return null;
   }
-
-  return {
-    id: ID,
-    title: TITLE.trim(),
-    vendor: VENDOR?.trim() || "Unknown",
-    description: stripHtml(BODY_HTML || ""),
-    tags: parseTags(TAGS),
-    price: parsePrice(PRICE_RANGE_V2),
-    imageUrl: JSON.parse(FEATURED_IMAGE).url || "",
-    status: STATUS || "ACTIVE",
-  };
 }
 
 function parseTags(tagsString?: string): string[] {
@@ -46,5 +50,14 @@ function parsePrice(priceJson?: string): number {
     return parseFloat(parsed.min_variant_price?.amount || "0");
   } catch {
     return 0;
+  }
+}
+
+function parseImage(imageJson: string): string | null {
+  try {
+    const parsed = JSON.parse(imageJson || "{}");
+    return parsed.url || null;
+  } catch {
+    return null;
   }
 }
