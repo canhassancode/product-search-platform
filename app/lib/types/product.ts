@@ -9,7 +9,7 @@ export type Product = {
   status: string;
 };
 
-export interface RawCSVRow {
+export type RawCSVRow = {
   ID: string | null;
   TITLE: string | null;
   VENDOR: string;
@@ -19,4 +19,4 @@ export interface RawCSVRow {
   FEATURED_IMAGE: string;
   STATUS: string;
   [key: string]: string | null | undefined;
-}
+};
