@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Product Search Platform",
+  title: "Healf - Product Search Platform",
   description: "High performaing fuzzy-search interface for Healf's wellness products with advanced filtering.",
 };
 
