@@ -6,6 +6,7 @@ export type Product = {
   tags: string[];
   price: number;
   imageUrl: string;
+  status: string;
 };
 
 export interface RawCSVRow {
