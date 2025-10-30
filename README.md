@@ -25,6 +25,7 @@
     - [6. Frontend Virtualisation for Unlimited scrolling vs Pagination](#6-frontend-virtualisation-for-unlimited-scrolling-vs-pagination)
     - [7. TypeScript vs JavaScript](#7-typescript-vs-javascript)
     - [8. Other decisions](#8-other-decisions)
+  - [🐞 Existing Bugs \& Broken windows](#-existing-bugs--broken-windows)
   - [👤 Author](#-author)
 
 ## 🚀 Quickstart
@@ -270,6 +271,12 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 - Using **LordIcon** icons using a license I pay for to create extra polish and a better UI/UX experience.
 - Using **Framer Motion** for animation polish.
 - Basic error boundary created.
+
+## 🐞 Existing Bugs & Broken windows
+
+- The current filters have been limited to 10 based on the number of associated products. The filter names have some remnants of incorrect names.
+- Many images that have `image unavailable`, a default image would be better UI/UX.
+-
 
 ## 👤 Author
 
