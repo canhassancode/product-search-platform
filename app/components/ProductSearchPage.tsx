@@ -13,6 +13,7 @@ import type { FilterOptions } from "@/lib/types/filter";
 import { motion } from "motion/react";
 import SortSection from "./SortSection";
 import Pillars from "./Pillars";
+import NoProductsFound from "./NoProductsFound";
 
 interface ProductSearchPageProps {
   products: Product[];
@@ -71,7 +72,7 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           <SortSection currentSort={sortOption} onSortChange={setSortOption} />
-          <VirtualisedProductList products={sortedResults.map((result) => result.item)} />
+          {sortedResults.length > 0 ? <VirtualisedProductList products={sortedResults.map((result) => result.item)} /> : <NoProductsFound />}
         </motion.div>
       </section>
     </main>

@@ -2,7 +2,7 @@
 
 > _High performaing fuzzy-search interface for **5,995+ Healf** wellness products with advanced filtering._
 
-[🏗️ Architecture Diagram](./docs/architecture-diagram.png) • [🎤 Voiceover Demo](TODO) • [🌐 Live Demo](https://product-search-platform-eight.vercel.app/)
+[🏗️ Architecture Diagram](./docs/architecture-diagram.png) • [🎤 Voiceover Demo](https://youtu.be/njQ3Ak2GyiQ) • [🌐 Live Demo](https://product-search-platform-eight.vercel.app/)
 
 ---
 

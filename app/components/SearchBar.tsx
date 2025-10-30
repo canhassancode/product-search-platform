@@ -15,12 +15,12 @@ export default function SearchBar({ query, setQuery }: { query: string; setQuery
       <Input
         type="text"
         placeholder="Search products..."
-        className="bg-white border border-gray-400 absolute left-0"
+        className="bg-white border border-gray-400 absolute left-0 pl-8"
         value={query}
         aria-label="Search for wellness products"
         onChange={(e) => setQuery(e.target.value)}
       />
-      <div className="absolute right-0 flex items-center justify-center pr-2" aria-hidden="true">
+      <div className="absolute left-0 flex items-center justify-center pl-2" aria-hidden="true">
         <LordIcon iconName="search" size={20} />
       </div>
     </motion.div>

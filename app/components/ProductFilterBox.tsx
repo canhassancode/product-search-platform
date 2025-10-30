@@ -56,7 +56,7 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
           <div onMouseEnter={handleFilterIconHover} className="flex items-center justify-center">
             <LordIcon ref={filterIconRef} iconName="filter" size={20} />
           </div>
-          <h1>Filter</h1>
+          <h1 className="text-sm lg:text-lg">Filter</h1>
         </div>
         <Button
           variant="outline"

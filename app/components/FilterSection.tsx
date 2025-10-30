@@ -65,7 +65,7 @@ export default function FilterSection({ title, items, selectedItems = [], limit 
             className="flex items-center gap-2"
           >
             {iconName && <LordIcon ref={iconRef} iconName={iconName} size={24} />}
-            <h2 className="font-medium text-md">{title}</h2>
+            <h2 className="font-medium text-sm lg:text-lg">{title}</h2>
           </motion.div>
           <CollapsibleTrigger asChild>
             <Button variant="ghost" size="icon" className="size-8 cursor-pointer">
