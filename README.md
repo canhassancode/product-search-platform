@@ -269,6 +269,7 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 - Initially intended to use **ShadCn** for everything, but quickly found that components such as `Card` did work optimally with the styling I was going for. Still using **ShadCn** for other components, just not the product cards as they need different styling.
 - Using **LordIcon** icons using a license I pay for to create extra polish and a better UI/UX experience.
 - Using **Framer Motion** for animation polish.
+- Basic error boundary created.
 
 ## 👤 Author
 
