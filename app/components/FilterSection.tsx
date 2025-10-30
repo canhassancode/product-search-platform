@@ -30,7 +30,7 @@ export default function FilterSection({ title, items, selectedItems = [], limit 
   };
 
   return (
-    <div className="flex flex-col gap-3 bg-white rounded-xl p-4 mx-1">
+    <div className="flex flex-col gap-3 bg-white rounded-xl p-4 mx-1 border border-gray-200">
       {selectedItems.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {selectedItems.map((item) => (
@@ -52,7 +52,7 @@ export default function FilterSection({ title, items, selectedItems = [], limit 
         <div className="flex items-center justify-between gap-2">
           <h2 className="font-medium text-md">{title}</h2>
           <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="icon" className="size-8">
+            <Button variant="ghost" size="icon" className="size-8 cursor-pointer">
               <ChevronsUpDown className="h-4 w-4" />
               <span className="sr-only">Toggle</span>
             </Button>

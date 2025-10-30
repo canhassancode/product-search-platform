@@ -1,37 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { FilterOptions } from "@/lib/types/filter";
+import type { FilterOptions } from "@/lib/types/filter";
 import { Button } from "@/components/ui/button";
 import FilterSection from "@/components/FilterSection";
 
-type SelectedFilters = {
-  vendors: string[];
-  goals: string[];
-  categories: string[];
+type ProductFilterBoxProps = {
+  filterOptions: FilterOptions;
+  selectedFilters: FilterOptions;
+  onFilterChange: (filters: FilterOptions) => void;
 };
 
-export default function ProductFilterBox({ filterOptions }: { filterOptions: FilterOptions }) {
-  const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
-    vendors: [],
-    goals: [],
-    categories: [],
-  });
-
+export default function ProductFilterBox({ filterOptions, selectedFilters, onFilterChange }: ProductFilterBoxProps) {
   const handleVendorChange = (selected: string[]) => {
-    setSelectedFilters((prev) => ({ ...prev, vendors: selected }));
+    onFilterChange({ ...selectedFilters, vendors: selected });
   };
 
   const handleGoalChange = (selected: string[]) => {
-    setSelectedFilters((prev) => ({ ...prev, goals: selected }));
+    onFilterChange({ ...selectedFilters, goals: selected });
   };
 
   const handleCategoryChange = (selected: string[]) => {
-    setSelectedFilters((prev) => ({ ...prev, categories: selected }));
+    onFilterChange({ ...selectedFilters, categories: selected });
   };
 
   const handleClearAll = () => {
-    setSelectedFilters({
+    onFilterChange({
       vendors: [],
       goals: [],
       categories: [],

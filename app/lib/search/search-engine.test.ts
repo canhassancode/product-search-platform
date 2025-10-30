@@ -1,5 +1,6 @@
-import { Product } from "../types/product";
+import type { Product } from "@/lib/types/product";
 import { searchProducts } from "./search-engine";
+import type { FilterOptions } from "@/lib/types/filter";
 
 const products: Product[] = [
   {
@@ -64,6 +65,86 @@ describe("Given the search engine", () => {
 
       expect(results.length).toBe(1);
       expect(results[0].item.title).toBe("Thorne Stress Support Formula");
+    });
+  });
+
+  describe("when filtering products", () => {
+    it("should return all products when no filters are applied", () => {
+      const filters: FilterOptions = { vendors: [], goals: [], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(4);
+    });
+
+    it("should filter products by a single vendor", () => {
+      const filters: FilterOptions = { vendors: ["Thorne"], goals: [], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(2);
+      expect(results.every((result) => result.item.vendor === "Thorne")).toBe(true);
+    });
+
+    it("should filter products by multiple vendors (OR logic)", () => {
+      const filters: FilterOptions = { vendors: ["Thorne", "Coola"], goals: [], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(3);
+      expect(results.every((result) => ["Thorne", "Coola"].includes(result.item.vendor))).toBe(true);
+    });
+
+    it("should filter products by a single goal", () => {
+      const filters: FilterOptions = { vendors: [], goals: ["Sleep Quality"], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(2);
+      expect(results.every((result) => result.item.tags.includes("goal:Sleep Quality"))).toBe(true);
+    });
+
+    it("should filter products by multiple goals (OR logic)", () => {
+      const filters: FilterOptions = { vendors: [], goals: ["Sleep Quality", "Stress and Anxiety"], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(3);
+    });
+
+    it("should filter products by a single category", () => {
+      const filters: FilterOptions = { vendors: [], goals: [], categories: ["Supplements"] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(3);
+      expect(results.every((result) => result.item.tags.includes("Supplements"))).toBe(true);
+    });
+
+    it("should filter products by multiple categories (OR logic)", () => {
+      const filters: FilterOptions = { vendors: [], goals: [], categories: ["Supplements", "SPF"] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(4);
+    });
+
+    it("should combine filters across vendors, goals, and categories (AND logic)", () => {
+      const filters: FilterOptions = { vendors: ["Thorne"], goals: ["Sleep Quality"], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(1);
+      expect(results[0].item.title).toBe("Sleep Quality Premium Melatonin");
+      expect(results[0].item.vendor).toBe("Thorne");
+    });
+
+    it("should apply filters before fuzzy search", () => {
+      const filters: FilterOptions = { vendors: ["Thorne"], goals: [], categories: [] };
+      const results = searchProducts(products, "sleep", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(1);
+      expect(results[0].item.title).toBe("Sleep Quality Premium Melatonin");
+      expect(results[0].item.vendor).toBe("Thorne");
+    });
+
+    it("should return empty array when filters match no products", () => {
+      const filters: FilterOptions = { vendors: ["NonExistent"], goals: [], categories: [] };
+      const results = searchProducts(products, "", ["title", "description", "tags"], filters);
+
+      expect(results.length).toBe(0);
     });
   });
 });
