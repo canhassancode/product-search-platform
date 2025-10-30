@@ -47,7 +47,7 @@ export default function VirtualisedProductList({ products }: { products: Product
               transform: `translateY(${start}px)`,
             }}
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-6 p-4" data-index={index}>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 p-4" data-index={index}>
               {rows[index].map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
