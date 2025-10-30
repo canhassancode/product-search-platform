@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import type { FilterOptions } from "@/lib/types/filter";
 import { Button } from "@/components/ui/button";
 import FilterSection from "@/components/FilterSection";
+import LordIcon, { type LordIconRef } from "@/components/LordIcon";
 
 type ProductFilterBoxProps = {
   filterOptions: FilterOptions;
@@ -11,6 +13,7 @@ type ProductFilterBoxProps = {
 };
 
 export default function ProductFilterBox({ filterOptions, selectedFilters, onFilterChange }: ProductFilterBoxProps) {
+  const filterIconRef = useRef<LordIconRef>(null);
   const handleVendorChange = (selected: string[]) => {
     onFilterChange({ ...selectedFilters, vendors: selected });
   };
@@ -31,10 +34,19 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
     });
   };
 
+  const handleFilterIconHover = () => {
+    filterIconRef.current?.play();
+  };
+
   return (
     <div className="flex flex-col gap-1 w-full">
       <div className="flex justify-between items-center p-4">
-        <h1>Filter</h1>
+        <div className="flex items-center gap-2">
+          <div onMouseEnter={handleFilterIconHover} className="flex items-center justify-center">
+            <LordIcon ref={filterIconRef} iconName="filter" size={20} />
+          </div>
+          <h1>Filter</h1>
+        </div>
         <Button
           variant="outline"
           size="sm"
@@ -49,6 +61,7 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
           title="Vendors"
           items={filterOptions.vendors}
           selectedItems={selectedFilters.vendors}
+          iconName="vendors"
           limit={10}
           onSelectionChange={handleVendorChange}
         />
@@ -56,6 +69,7 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
           title="Goals"
           items={filterOptions.goals}
           selectedItems={selectedFilters.goals}
+          iconName="goals"
           limit={10}
           onSelectionChange={handleGoalChange}
         />
@@ -63,6 +77,7 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
           title="Categories"
           items={filterOptions.categories}
           selectedItems={selectedFilters.categories}
+          iconName="category"
           limit={10}
           onSelectionChange={handleCategoryChange}
         />

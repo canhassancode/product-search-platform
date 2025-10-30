@@ -34,8 +34,8 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
       <section className="container mx-auto w-4/5 lg:w-1/2 px-4 py-12">
         <SearchBar query={query} setQuery={setQuery} />
       </section>
-      <section className="container mx-auto w-full lg:px-8">
-        <h1 className="text-xl font-bold text-gray-900">
+      <section className="container mx-auto w-full px-4 lg:px-8">
+        <h1 className="text-lg font-medium text-gray-800">
           {debouncedQuery && `${results.length} products found for "${debouncedQuery}"`}
           {!debouncedQuery && `${results.length} products found`}
         </h1>
