@@ -22,7 +22,7 @@ function filterInactiveProducts(products: Product[]): Product[] {
 }
 
 function truncateDescription(description: string): string {
-  return description.slice(0, 197).trim() + "...";
+  return description.replace("Key Benefits", "").slice(0, 197).trim() + "...";
 }
 
 function filterUndesiredTags(tags: string[]): string[] {
