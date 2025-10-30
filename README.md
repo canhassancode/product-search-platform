@@ -22,7 +22,7 @@
     - [3. Tag-Based Filtering vs Other Filter Types](#3-tag-based-filtering-vs-other-filter-types)
     - [4. Virtual Scrolling vs Pagination](#4-virtual-scrolling-vs-pagination)
     - [5. Data optimisation strategy](#5-data-optimisation-strategy)
-    - [6. Shadcn Data Table](#6-shadcn-data-table)
+    - [6. Frontend Virtualisation for Unlimited scrolling vs Pagination](#6-frontend-virtualisation-for-unlimited-scrolling-vs-pagination)
     - [7. TypeScript vs JavaScript](#7-typescript-vs-javascript)
     - [8. Other decisions](#8-other-decisions)
   - [👤 Author](#-author)
@@ -225,20 +225,19 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 
 ---
 
-### 6. Shadcn Data Table
+### 6. Frontend Virtualisation for Unlimited scrolling vs Pagination
 
-**Decision:** Use Shadcn components for bulk of the rendered components
+**Decision:** Use Frontend Virtualisation with unlimited scroll
 
 **Why:**
 
-- Battle-tested component library that is mature and well-known amongst developers.
-- More than capable for the requirements.
-- Lots of benefits plus opportunities for expansion out-the-box.
+- Dataset is an acceptable size to enable a nice smooth unlimited scroll.
+- We need to virtualise the data so that not all items are rendered in the DOM, only visible items.
 
 **Trade-offs:**
 
-- ⚠️ Not as customisable as an in-house component could be
-- ✅ Lends itself well to the requirements and development time
+- ⚠️ Quite fiddly to work with, can mess up styling
+- ✅ Improves performance with big datasets
 
 ---
 
@@ -266,6 +265,7 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 - Using `husky` for pre-commit checks as this is trunk-based-development.
 - Testing: Include tests for lower-level functions such as the product-loader within `/lib`. With a single E2E test for confidence.
 - Using `swc/jest` over `ts-jest` for lightning-fast speeds on local tests.
+- Initially intended to use **ShadCn** for everything, but quickly found that components such as `Card` did work optimally with the styling I was going for.
 
 ## 👤 Author
 
