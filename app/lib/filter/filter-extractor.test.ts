@@ -36,28 +36,28 @@ const products: Product[] = [
 
 describe("Given the filter extractor", () => {
   describe("when calling the extractFilterOptions function", () => {
-    it("should extract vendors from the products", () => {
+    it("should extract vendors from the products and sort them by count", () => {
       const filters = extractFilterOptions(products);
-      expect(filters.vendors).toEqual(["Coola", "Nature's Way", "Thorne"]);
+      expect(filters.vendors).toEqual(["Thorne", "Coola", "Nature's Way"]);
     });
 
-    it("should extract goals from the products", () => {
+    it("should extract goals from the products and sort them by count", () => {
       const filters = extractFilterOptions(products);
-      expect(filters.goals).toEqual(["Sleep Quality", "Stress and Anxiety"]);
+      expect(filters.goals).toEqual(["Stress and Anxiety", "Sleep Quality"]);
     });
 
-    it("should extract categories from the products", () => {
+    it("should extract categories from the products and sort them by count", () => {
       const filters = extractFilterOptions(products);
       expect(filters.categories).toEqual([
+        "Supplements",
+        "Suncare",
+        "Mood support",
+        "Vitamins & Supplements",
+        "Skincare",
+        "SPF",
+        "Sleep",
         "Body Care",
         "Hair Care",
-        "Mood support",
-        "SPF",
-        "Skincare",
-        "Sleep",
-        "Suncare",
-        "Supplements",
-        "Vitamins & Supplements",
       ]);
     });
   });

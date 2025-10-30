@@ -8,12 +8,14 @@ import SearchBar from "@/components/SearchBar";
 import Header from "@/components/Header";
 import VirtualisedProductList from "@/components/VirtualisedProductList";
 import ProductFilterBox from "@/components/ProductFilterBox";
+import { FilterOptions } from "@/lib/types/filter";
 
 interface ProductSearchPageProps {
   products: Product[];
+  filterOptions: FilterOptions;
 }
 
-export function ProductSearchPage({ products }: ProductSearchPageProps) {
+export function ProductSearchPage({ products, filterOptions }: ProductSearchPageProps) {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query);
   const results = searchProducts(products, debouncedQuery, ["title", "description", "tags"]);
@@ -34,9 +36,9 @@ export function ProductSearchPage({ products }: ProductSearchPageProps) {
       </section>
       <section className="container mx-auto w-full px-4 py-2 rounded-t-3xl flex flex-col lg:flex-row gap-4">
         <div className="flex w-full lg:w-1/4 h-full pb-24 lg:m-4 bg-gray-100/80 border border-gray-200 rounded-xl font-medium text-lg">
-          <ProductFilterBox />
+          <ProductFilterBox filterOptions={filterOptions} />
         </div>
-        <div className="flex w-full lg:w-3/4">
+        <div className="flex w-full h-full lg:w-3/4">
           <VirtualisedProductList products={results.map((result) => result.item)} />
         </div>
       </section>

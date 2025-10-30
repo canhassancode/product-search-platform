@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { loadProducts } from "@/lib/data/product-loader";
 import { ProductSearchPage } from "@/components/ProductSearchPage";
+import { extractFilterOptions } from "@/lib/filter/filter-extractor";
 
 function SearchLoading() {
   return (
@@ -27,8 +28,9 @@ function SearchLoading() {
 
 async function ProductsContent() {
   const products = await loadProducts("app/lib/data/products.csv");
+  const filterOptions = extractFilterOptions(products);
 
-  return <ProductSearchPage products={products} />;
+  return <ProductSearchPage products={products} filterOptions={filterOptions} />;
 }
 
 export default function Home() {

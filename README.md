@@ -138,6 +138,7 @@ This section will include assumptions made for this task, including any key deci
 - ✅ Leverages existing data structure
 - ✅ Domain-appropriate for wellness products
 - ⚠️ Other features deferred (sort by price, rating)
+- ⚠️ Limiting Vendor, Category, and Goal tags to 10 of each - prioritised by the recurring values
 
 **Alternatives considered:**
 
