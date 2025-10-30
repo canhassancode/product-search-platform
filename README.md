@@ -2,7 +2,7 @@
 
 > _High performaing fuzzy-search interface for **5,995+ Healf** wellness products with advanced filtering._
 
-[Architecture Diagram](./docs/architecture-diagram.png) • [Voiceover Demo](TODO) • [Live Demo](TODO)
+[🏗️ Architecture Diagram](./docs/architecture-diagram.png) • [🎤 Voiceover Demo](TODO) • [🌐 Live Demo](https://product-search-platform-eight.vercel.app/)
 
 ---
 
@@ -82,7 +82,7 @@ This section will include assumptions made for this task, including any key deci
 
 **Why:**
 
-- 5,955 products (TODO: add optimized size vs 50MB csv) fits comfortably in browser memory
+- 5,955 products ~2.8MB vs 50MB csv fits comfortably in browser memory
 - 0ms search latency vs higher latency with API calls
 - Simpler architecture without API endpoints
 - Better UX for frequent filtering
