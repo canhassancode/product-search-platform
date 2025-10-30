@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 
 export default function SearchBar({ query, setQuery }: { query: string; setQuery: (query: string) => void }) {

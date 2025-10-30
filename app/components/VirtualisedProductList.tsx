@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/lib/types/product";
 import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";

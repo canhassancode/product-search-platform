@@ -29,13 +29,13 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
         <SearchBar query={query} setQuery={setQuery} />
       </section>
       <section className="container mx-auto w-full lg:px-8">
-        <h1 className="text-2xl font-bold text-gray-900">
-          {debouncedQuery && `${results.length} results for "${debouncedQuery}"`}
-          {!debouncedQuery && `${results.length} results`}
+        <h1 className="text-xl font-bold text-gray-900">
+          {debouncedQuery && `${results.length} products found for "${debouncedQuery}"`}
+          {!debouncedQuery && `${results.length} products found`}
         </h1>
       </section>
       <section className="container mx-auto w-full px-4 py-2 rounded-t-3xl flex flex-col lg:flex-row gap-4">
-        <div className="flex w-full lg:w-1/4 h-full pb-24 lg:m-4 bg-gray-100/80 border border-gray-200 rounded-xl font-medium text-lg">
+        <div className="flex w-full lg:w-1/4 h-full pb-4 lg:m-4 bg-gray-100/80 border border-gray-200 rounded-xl font-medium text-lg">
           <ProductFilterBox filterOptions={filterOptions} />
         </div>
         <div className="flex w-full h-full lg:w-3/4">

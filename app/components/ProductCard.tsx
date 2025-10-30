@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/lib/types/product";
 import { useState } from "react";
 import Image from "next/image";

@@ -119,4 +119,34 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+      opacity: 1;
+    }
+  }
+
+  @keyframes collapsible-up {
+    from {
+      height: var(--radix-collapsible-content-height);
+      opacity: 1;
+    }
+    to {
+      height: 0;
+      opacity: 0;
+    }
+  }
+
+  [data-slot="collapsible-content"][data-state="open"] {
+    animation: collapsible-down 300ms ease-out;
+  }
+
+  [data-slot="collapsible-content"][data-state="closed"] {
+    animation: collapsible-up 300ms ease-out;
+  }
 }

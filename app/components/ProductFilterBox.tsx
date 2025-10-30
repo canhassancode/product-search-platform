@@ -1,34 +1,78 @@
+"use client";
+
+import { useState } from "react";
 import { FilterOptions } from "@/lib/types/filter";
+import { Button } from "@/components/ui/button";
+import FilterSection from "@/components/FilterSection";
+
+type SelectedFilters = {
+  vendors: string[];
+  goals: string[];
+  categories: string[];
+};
 
 export default function ProductFilterBox({ filterOptions }: { filterOptions: FilterOptions }) {
+  const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
+    vendors: [],
+    goals: [],
+    categories: [],
+  });
+
+  const handleVendorChange = (selected: string[]) => {
+    setSelectedFilters((prev) => ({ ...prev, vendors: selected }));
+  };
+
+  const handleGoalChange = (selected: string[]) => {
+    setSelectedFilters((prev) => ({ ...prev, goals: selected }));
+  };
+
+  const handleCategoryChange = (selected: string[]) => {
+    setSelectedFilters((prev) => ({ ...prev, categories: selected }));
+  };
+
+  const handleClearAll = () => {
+    setSelectedFilters({
+      vendors: [],
+      goals: [],
+      categories: [],
+    });
+  };
+
   return (
     <div className="flex flex-col gap-1 w-full">
-      <h1 className="p-4">Filter</h1>
+      <div className="flex justify-between items-center p-4">
+        <h1>Filter</h1>
+        <Button
+          variant="outline"
+          size="sm"
+          className="cursor-pointer hover:scale-101 hover:bg-black hover:text-white transition-all duration-200"
+          onClick={handleClearAll}
+        >
+          Clear all
+        </Button>
+      </div>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-col gap-2 bg-white rounded-xl p-4 mx-1">
-          <h2 className="font-medium text-sm">Vendors</h2>
-          {filterOptions.vendors.map((vendor) => (
-            <div key={vendor} className="flex items-center gap-2">
-              {vendor}
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 bg-white rounded-xl p-4 mx-1">
-          <h2 className="font-medium text-sm">Goals</h2>
-          {filterOptions.goals.map((goal) => (
-            <div key={goal} className="flex items-center gap-2">
-              {goal}
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 bg-white rounded-xl p-4 mx-1">
-          <h2 className="font-medium text-sm">Categories</h2>
-          {filterOptions.categories.map((category) => (
-            <div key={category} className="flex items-center gap-2">
-              {category}
-            </div>
-          ))}
-        </div>
+        <FilterSection
+          title="Vendors"
+          items={filterOptions.vendors}
+          selectedItems={selectedFilters.vendors}
+          limit={10}
+          onSelectionChange={handleVendorChange}
+        />
+        <FilterSection
+          title="Goals"
+          items={filterOptions.goals}
+          selectedItems={selectedFilters.goals}
+          limit={10}
+          onSelectionChange={handleGoalChange}
+        />
+        <FilterSection
+          title="Categories"
+          items={filterOptions.categories}
+          selectedItems={selectedFilters.categories}
+          limit={10}
+          onSelectionChange={handleCategoryChange}
+        />
       </div>
     </div>
   );
