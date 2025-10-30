@@ -11,6 +11,8 @@ import ProductFilterBox from "@/components/ProductFilterBox";
 import type { FilterOptions } from "@/lib/types/filter";
 import { motion } from "motion/react";
 import SortSection from "./SortSection";
+import Image from "next/image";
+import Pillars from "./Pillars";
 
 interface ProductSearchPageProps {
   products: Product[];
@@ -52,9 +54,14 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="flex w-full lg:w-1/4 h-full pb-4 bg-gray-100/80 border border-gray-200 rounded-xl font-medium text-lg"
+          className="flex flex-col gap-4 w-full lg:w-1/4 h-full font-medium text-lg"
         >
-          <ProductFilterBox filterOptions={filterOptions} selectedFilters={selectedFilters} onFilterChange={setSelectedFilters} />
+          <div className="bg-gray-100/80 border border-gray-200 rounded-xl pb-4">
+            <ProductFilterBox filterOptions={filterOptions} selectedFilters={selectedFilters} onFilterChange={setSelectedFilters} />
+          </div>
+          <div className="hidden lg:block relative aspect-3/4 overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
+            <Pillars />
+          </div>
         </motion.div>
         <motion.div
           className="flex flex-col w-full h-full lg:w-3/4"
