@@ -15,6 +15,7 @@ type ProductFilterBoxProps = {
 
 export default function ProductFilterBox({ filterOptions, selectedFilters, onFilterChange }: ProductFilterBoxProps) {
   const filterIconRef = useRef<LordIconRef>(null);
+  const clearAllIconRef = useRef<LordIconRef>(null);
   const handleVendorChange = (selected: string[]) => {
     onFilterChange({ ...selectedFilters, vendors: selected });
   };
@@ -39,6 +40,10 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
     filterIconRef.current?.play();
   };
 
+  const handleClearAllIconHover = () => {
+    clearAllIconRef.current?.play();
+  };
+
   return (
     <div className="flex flex-col gap-1 w-full">
       <motion.div
@@ -56,10 +61,12 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
         <Button
           variant="outline"
           size="sm"
-          className="cursor-pointer hover:scale-101 hover:bg-black hover:text-white transition-all duration-200"
+          className="cursor-pointer hover:scale-101"
           onClick={handleClearAll}
+          onMouseEnter={handleClearAllIconHover}
         >
-          Clear all
+          <LordIcon iconName="clear" size={20} ref={clearAllIconRef} />
+          <span>Clear all</span>
         </Button>
       </motion.div>
       <div className="flex flex-col gap-2">

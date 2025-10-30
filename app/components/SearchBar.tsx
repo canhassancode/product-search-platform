@@ -7,8 +7,8 @@ import { motion } from "motion/react";
 export default function SearchBar({ query, setQuery }: { query: string; setQuery: (query: string) => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}
       className="flex items-center gap-2 relative hover:scale-101 transform-all duration-200"
     >
