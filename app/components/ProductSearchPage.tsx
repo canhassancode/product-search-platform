@@ -4,6 +4,7 @@ import { Product } from "@/lib/types/product";
 import { useState } from "react";
 import { searchProducts } from "@/lib/search/search-engine";
 import useDebounce from "@/hooks/useDebounce";
+import { useProductSort } from "@/hooks/useProductSort";
 import SearchBar from "@/components/SearchBar";
 import Header from "@/components/Header";
 import VirtualisedProductList from "@/components/VirtualisedProductList";
@@ -11,7 +12,6 @@ import ProductFilterBox from "@/components/ProductFilterBox";
 import type { FilterOptions } from "@/lib/types/filter";
 import { motion } from "motion/react";
 import SortSection from "./SortSection";
-import Image from "next/image";
 import Pillars from "./Pillars";
 
 interface ProductSearchPageProps {
@@ -28,7 +28,8 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
   });
 
   const debouncedQuery = useDebounce(query);
-  const results = searchProducts(products, debouncedQuery, ["title", "description", "tags"], selectedFilters);
+  const searchResults = searchProducts(products, debouncedQuery, ["title", "description", "tags"], selectedFilters);
+  const { sortOption, setSortOption, sortedResults } = useProductSort(searchResults);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -45,8 +46,8 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
         className="container mx-auto w-full px-4 lg:px-8 pb-4"
       >
         <h1 className="text-sm text-center lg:text-left lg:text-lg font-medium text-gray-800">
-          {debouncedQuery && `${results.length} products found for "${debouncedQuery}"`}
-          {!debouncedQuery && `${results.length} products found`}
+          {debouncedQuery && `${sortedResults.length} products found for "${debouncedQuery}"`}
+          {!debouncedQuery && `${sortedResults.length} products found`}
         </h1>
       </motion.section>
       <section className="container mx-auto w-full px-4 flex flex-col lg:flex-row gap-4">
@@ -69,8 +70,8 @@ export function ProductSearchPage({ products, filterOptions }: ProductSearchPage
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
-          <SortSection />
-          <VirtualisedProductList products={results.map((result) => result.item)} />
+          <SortSection currentSort={sortOption} onSortChange={setSortOption} />
+          <VirtualisedProductList products={sortedResults.map((result) => result.item)} />
         </motion.div>
       </section>
     </main>
