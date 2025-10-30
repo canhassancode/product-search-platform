@@ -5,6 +5,7 @@ import type { FilterOptions } from "@/lib/types/filter";
 import { Button } from "@/components/ui/button";
 import FilterSection from "@/components/FilterSection";
 import LordIcon, { type LordIconRef } from "@/components/LordIcon";
+import { motion } from "motion/react";
 
 type ProductFilterBoxProps = {
   filterOptions: FilterOptions;
@@ -40,7 +41,12 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
 
   return (
     <div className="flex flex-col gap-1 w-full">
-      <div className="flex justify-between items-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut", delay: 0.3 }}
+        className="flex justify-between items-center p-4"
+      >
         <div className="flex items-center gap-2">
           <div onMouseEnter={handleFilterIconHover} className="flex items-center justify-center">
             <LordIcon ref={filterIconRef} iconName="filter" size={20} />
@@ -55,7 +61,7 @@ export default function ProductFilterBox({ filterOptions, selectedFilters, onFil
         >
           Clear all
         </Button>
-      </div>
+      </motion.div>
       <div className="flex flex-col gap-2">
         <FilterSection
           title="Vendors"

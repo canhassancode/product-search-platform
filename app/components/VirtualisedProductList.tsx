@@ -4,6 +4,7 @@ import { Product } from "@/lib/types/product";
 import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import ProductCard from "@/components/ProductCard";
+import { motion } from "motion/react";
 
 export default function VirtualisedProductList({ products }: { products: Product[] }) {
   const parentRef = useRef(null);
@@ -49,11 +50,17 @@ export default function VirtualisedProductList({ products }: { products: Product
               transform: `translateY(${start}px)`,
             }}
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 p-4" data-index={index}>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="grid grid-cols-2 lg:grid-cols-3 gap-4 p-4"
+              data-index={index}
+            >
               {rows[index].map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>

@@ -267,7 +267,8 @@ Given 16-20 hour time budget, tag filtering provides the highest value:
 - Testing: Include tests for lower-level functions such as the product-loader within `/lib`. With a single E2E test for confidence.
 - Using `swc/jest` over `ts-jest` for lightning-fast speeds on local tests.
 - Initially intended to use **ShadCn** for everything, but quickly found that components such as `Card` did work optimally with the styling I was going for. Still using **ShadCn** for other components, just not the product cards as they need different styling.
-- Included LordIcon icons using a license I pay for to create extra polish and a better UI/UX experience.
+- Using **LordIcon** icons using a license I pay for to create extra polish and a better UI/UX experience.
+- Using **Framer Motion** for animation polish.
 
 ## 👤 Author
 

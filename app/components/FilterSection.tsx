@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ChevronsUpDown, X } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import LordIcon, { type LordIconRef } from "@/components/LordIcon";
+import { motion } from "motion/react";
 
 type FilterSectionProps = {
   title: string;
@@ -57,10 +58,15 @@ export default function FilterSection({ title, items, selectedItems = [], limit 
 
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut", delay: 0.35 }}
+            className="flex items-center gap-2"
+          >
             {iconName && <LordIcon ref={iconRef} iconName={iconName} size={24} />}
             <h2 className="font-medium text-md">{title}</h2>
-          </div>
+          </motion.div>
           <CollapsibleTrigger asChild>
             <Button variant="ghost" size="icon" className="size-8 cursor-pointer">
               <ChevronsUpDown className="h-4 w-4" />
