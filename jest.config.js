@@ -11,6 +11,6 @@ module.exports = {
   cache: true,
   cacheDirectory: ".jest-cache",
   testMatch: ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
-  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  testPathIgnorePatterns: ["/node_modules/", "/dist/", "/e2e/"],
   testTimeout: 30000,
 };

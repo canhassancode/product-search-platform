@@ -11,6 +11,9 @@
 - [Product Search Platform: Guide and Architecture](#product-search-platform-guide-and-architecture)
   - [📚 Table of contents](#-table-of-contents)
   - [🚀 Quickstart](#-quickstart)
+  - [🧪 Testing](#-testing)
+    - [Unit Testing (Jest with SWC)](#unit-testing-jest-with-swc)
+    - [E2E Testing (Playwright)](#e2e-testing-playwright)
   - [🎉 Features](#-features)
   - [💡 Problem Statement](#-problem-statement)
     - [User story](#user-story)
@@ -41,6 +44,24 @@ pnpm dev # runs the code
 ```
 
 After running these commands, navigate to [http://localhost:3000](http://localhost:3000).
+
+## 🧪 Testing
+
+There are two levels of tests here, unit tests that were created with TDD in mind, and an e2e test suite for visual testing. Below is how to run these suites.
+
+### Unit Testing (Jest with SWC)
+
+```shell
+pnpm test # this runs the entire suite
+pnpm test:watch # enables this in watch mode for save hot reload testing
+
+```
+
+### E2E Testing (Playwright)
+
+```shell
+pnpm test:e2e # this runs the entire e2e test suite found in the e2e/ folder
+```
 
 ## 🎉 Features
 
